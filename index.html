@@ -11,19 +11,19 @@
   <body>
     <div id="app">
       <h1>{{title}}</h1>
-      <form v-on:submit.prevent="addItem({name: productName})">
+      <form @submit.prevent="addItem(product)">
         <p v-if="items.length === 0">There's no items.</p>
         <ul v-else>
-          <li v-for="(item, index) in items" v-bind:key="index">
-            {{item.name}}
+          <li v-for="(item, index) in items" :key="index">
+            {{item.name | uppercase}} {{item.quantity}}x
           </li>
+          <li><b>Total Amount: {{totalAmount}}</b></li>
         </ul>
-        <div>
-          <label for="product">Product:</label>
-          <input type="text" id="product" v-model="productName" />
-          <div><small>{{productName}}</small></div>
-          <input type="submit" value="Add" />
-        </div>
+        <label for="product">Product:</label>
+        <input type="text" id="product" v-model="product.name" />
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" v-model.number="product.quantity" />
+        <input type="submit" value="Add" />
       </form>
     </div>
 
@@ -35,12 +35,30 @@
         el: "#app",
         data: {
           title: "Order",
-          productName: "",
+          product: {},
           items: [],
+        },
+        filters: {
+          uppercase(value) {
+            return value.toString().toUpperCase();
+          },
+        },
+        computed: {
+          totalAmount() {
+            return this.items.reduce(
+              (total, item) => (total += item.quantity),
+              0
+            );
+          },
+        },
+        watch: {
+          items(newItems) {
+            console.log("newItems", newItems);
+          },
         },
         methods: {
           addItem(item) {
-            this.items.push(item);
+            this.items.push({ ...item });
           },
         },
       });
