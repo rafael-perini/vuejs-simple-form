@@ -11,16 +11,18 @@
   <body>
     <div id="app">
       <h1>{{title}}</h1>
-      <form @submit.prevent="addItem(product)">
+      <form @submit.prevent>
         <p v-if="items.length === 0">There's no items.</p>
         <ul v-else>
           <li v-for="(item, index) in items" :key="index">
-            <product-form v-model="items[index]"></product-form>
+            <product-form v-model="items[index]">
+              <input type="button" value="Remove" @click="removeItem(index)" />
+            </product-form>
           </li>
           <li><b>Total Amount: {{totalAmount}}</b></li>
         </ul>
         <product-form v-model="product">
-          <input type="submit" value="Add" />
+          <input type="button" value="Add" @click="addItem(product)" />
         </product-form>
       </form>
     </div>
@@ -68,6 +70,9 @@
         methods: {
           addItem(item) {
             this.items.push({ ...item });
+          },
+          removeItem(index) {
+            this.items.splice(index, 1);
           },
         },
       });
