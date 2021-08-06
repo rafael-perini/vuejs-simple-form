@@ -11,7 +11,8 @@
   <body>
     <div id="app">
       <h1>{{title}}</h1>
-      <p v-if="item.length === 0">There's no items.</p>
+      <p v-if="items.length === 0">There's no items.</p>
+      <p v-show="items.length > 0">Now we have items!</p>
     </div>
 
     <!-- development version, includes helpful console warnings -->
