@@ -1,8 +1,6 @@
 {
   "name": "vuejs-simple-form",
-  "title": "Vue.js Simple Form",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "start": "npm run serve",
     "serve": "vue-cli-service serve",
