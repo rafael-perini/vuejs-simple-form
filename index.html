@@ -11,10 +11,20 @@
   <body>
     <div id="app">
       <h1>{{title}}</h1>
-      <p v-if="items.length === 0">There's no items.</p>
-      <ul v-else>
-        <li v-for="(item, index) in items" v-bind:key="index">{{item.name}}</li>
-      </ul>
+      <form v-on:submit.prevent="addItem({name: productName})">
+        <p v-if="items.length === 0">There's no items.</p>
+        <ul v-else>
+          <li v-for="(item, index) in items" v-bind:key="index">
+            {{item.name}}
+          </li>
+        </ul>
+        <div>
+          <label for="product">Product:</label>
+          <input type="text" id="product" v-model="productName" />
+          <div><small>{{productName}}</small></div>
+          <input type="submit" value="Add" />
+        </div>
+      </form>
     </div>
 
     <!-- development version, includes helpful console warnings -->
@@ -25,11 +35,13 @@
         el: "#app",
         data: {
           title: "Order",
-          items: [
-            { id: 1, name: "Shirt" },
-            { id: 2, name: "Pants" },
-            { id: 3, name: "Hat" },
-          ],
+          productName: "",
+          items: [],
+        },
+        methods: {
+          addItem(item) {
+            this.items.push(item);
+          },
         },
       });
     </script>
