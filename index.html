@@ -12,7 +12,9 @@
     <div id="app">
       <h1>{{title}}</h1>
       <p v-if="items.length === 0">There's no items.</p>
-      <p v-show="items.length > 0">Now we have items!</p>
+      <ul v-else>
+        <li v-for="item in items">{{item.name}}</li>
+      </ul>
     </div>
 
     <!-- development version, includes helpful console warnings -->
@@ -23,7 +25,10 @@
         el: "#app",
         data: {
           title: "Order",
-          items: [],
+          items: [
+            { id: 1, name: "Shirt" },
+            { id: 2, name: "Pants" },
+          ],
         },
       });
     </script>
